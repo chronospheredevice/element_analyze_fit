@@ -32,7 +32,7 @@ int main(int argc, char **argv)
 		return 9;
 	}
 
-	if (argv[1] == "\?") {
+	if (argv[1][0] == '?') {
 		std::ofstream ofs(readwrite::samplefile);
 		if (!ofs.good()) {
 			os << "Failed to open sample file.\n\n";
