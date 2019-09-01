@@ -177,6 +177,10 @@ namespace stdweight {
 		table["U"] = 238.02891f;
 	}
 
+	bool Molecule::iselement(const std::string &str) {
+		return !(table.find(str) == table.end());
+	}
+
 	float Molecule::getweight(const std::map<std::string, int> &mol) const {
 		float weight = 0.0f;
 		for (auto item : mol) {

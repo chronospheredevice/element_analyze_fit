@@ -4,7 +4,7 @@
 #include "readwrite.h"
 #include "easolver.h"
 #include "stdatomweight.h"
-//#define PAUSE_AT_END
+#define PAUSE_AT_END
 constexpr int output_precision = 3;
 
 int main(int argc, char **argv)
@@ -76,8 +76,21 @@ int main(int argc, char **argv)
 		return 2;
 	}
 
-	std::vector<std::vector<float>> thr;
 	stdweight::Molecule mole;
+
+	for (const std::string &str : data.exp_element) {
+		if (mole.iselement(str))
+			continue;
+		os << "Element Error: " << str << " is not an element or has no atom mass.\n";
+		os << "  Calculation failed.\n\n";
+		os << "EASlover terminated." << std::endl;
+#ifdef PAUSE_AT_END
+		system("pause");
+#endif // PAUSE_AT_END
+		return 2;
+	}
+
+	std::vector<std::vector<float>> thr;
 	
 	for (size_t i = 0; i < data.mol_list.size(); ++i) {
 		try {
@@ -119,10 +132,8 @@ int main(int argc, char **argv)
 		solver.iterate();
 	}
 	
-	if (!converged) {
+	if (!converged)
 		os << "Fail to converge in " << data.maxcyc << " cycles.\n\n";
-		os << "EASlover terminated." << std::endl;
-	}
 	else {
 		os << "Coverged after " << i << " cycles.\n\n";
 		os << "Final Result:\n";
@@ -134,8 +145,8 @@ int main(int argc, char **argv)
 		cycledata.err_vec = err_vec;
 		readwrite::writefile_step(os, cycledata);
 		readwrite::writefile(os, finale);
-		os << "EASlover terminated." << std::endl;
 	}
+	os << "EASlover terminated." << std::endl;
 #ifdef PAUSE_AT_END
 	system("pause");
 #endif // PAUSE_AT_END
