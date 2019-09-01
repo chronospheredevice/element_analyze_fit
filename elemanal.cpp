@@ -4,7 +4,7 @@
 #include "readwrite.h"
 #include "easolver.h"
 #include "stdatomweight.h"
-#define PAUSE_AT_END
+//#define PAUSE_AT_END
 constexpr int output_precision = 3;
 
 int main(int argc, char **argv)
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 		data = readwrite::readfile(is);
 	}
 	catch (const std::string &err) {
-		std::cout << err;
+		os << err;
 		os << "\nEASlover terminated." << std::endl;
 #ifdef PAUSE_AT_END
 		system("pause");
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
 			thr.push_back(mole.getpercent(data.mol_list[i], data.exp_element));
 		}
 		catch (const std::string &err){
-			std::cout << err;
+			os << err;
 			os << "\nEASlover terminated." << std::endl;
 #ifdef PAUSE_AT_END
 			system("pause");
