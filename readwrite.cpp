@@ -303,7 +303,8 @@ readwrite::Readin readwrite::readfile(std::ifstream &is) {
 			continue;
 		if (lin << buf)
 			continue;
-		
+		std::string errinfo = "Syntax Error: Unknown error.\n";
+		throw errinfo;
 	}
 	if (!lin.valid()) {
 		std::string errinfo = "Syntax Error: lack of required specifier.\n";
@@ -397,7 +398,7 @@ std::ofstream & readwrite::writesample(std::ofstream &os){
 	return os;
 }
 
-std::pair<float, float> maxrws(const std::vector<float> err){
+std::pair<float, float> maxrws(const std::vector<float> &err){
 	assert(!err.empty());
 	float maxerr = 0.0f, rwserr = 0.0f;
 	for(float item : err){
