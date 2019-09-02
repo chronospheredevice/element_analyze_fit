@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 			return 255;
 		}
 		readwrite::writesample(ofs);
-		os << "A sample input file has been writen as \"input.txt\".\n\n";
+		os << "A sample input file has been writen as \"" << readwrite::samplefile << "\".\n\n";
 		os << "EASlover terminated." << std::endl;
 #ifdef PAUSE_AT_END
 		system("pause");
@@ -123,8 +123,7 @@ int main(int argc, char **argv)
 			break;
 		}
 		if (data.printmore) {
-			auto guess = solver.getguess();
-			cycledata.mol_massratio = guess;
+			cycledata.mol_massratio = solver.getguess();
 			cycledata.err_vec = err_vec;
 			os << "Cycle " << i << " :\n";
 			readwrite::writefile_step(os, cycledata);
