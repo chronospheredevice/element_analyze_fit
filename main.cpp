@@ -128,7 +128,17 @@ int main(int argc, char **argv)
 			os << "Cycle " << i << " :\n";
 			readwrite::writefile_step(os, cycledata);
 		}
-		solver.iterate();
+		try{
+			solver.iterate();
+		}catch(const char * str){
+			os << "Math Error:\n";
+			os << "  Your given materials are linearly dependent.\n\n";
+			os << "EASlover terminated." << std::endl;
+#ifdef PAUSE_AT_END
+			system("pause");
+#endif // PAUSE_AT_END
+			return 5;
+		}
 	}
 	
 	if (!converged)
